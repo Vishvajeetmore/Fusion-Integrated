@@ -204,4 +204,3 @@ def announcements_for(actor) -> QuerySet[Announcement]:
     if _is_alumni(actor):
         return visible.filter(audience__in=("alumni", "all"))
     return visible.filter(audience__in=("students", "registered", "all"))
-```

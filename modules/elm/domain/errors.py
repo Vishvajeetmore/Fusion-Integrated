@@ -1,4 +1,3 @@
-from typing import Optional
 from datetime import date
 
 class ELMDomainError(Exception):
@@ -23,11 +22,11 @@ class InsufficientBalanceError(ELMDomainError):
     def __init__(self, balance: int, required: int):
         self.balance = balance
         self.required = required
-        super().__init__(f"Insufficient leave balance: {balance} required, {required} available.")
+        super().__init__(f"Insufficient leave balance: {balance} available, {required} required.")
 
 class OverlappingLeaveError(ELMDomainError):
     """Error raised when the leave request overlaps with an existing leave request."""
-    def __init__(self, request: 'LeaveRequest'):
+    def __init__(self, request: object):
         self.request = request
         super().__init__(f"Leave request overlaps with existing request: {request}")
 

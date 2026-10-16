@@ -110,3 +110,30 @@ def get_annual_limit(
         return Decimal("20")
 
     raise ValueError(f"No annual limit defined for {category!r}")
+
+
+def validate_category_eligibility(
+    category: LeaveCategory,
+    *,
+    is_faculty: bool | None = None,
+    col_eligible: bool | None = None,
+) -> None:
+    """Raise IneligibleCategoryError when the employee cannot use a category."""
+    from modules.elm.domain.errors import IneligibleCategoryError
+
+    if not isinstance(category, LeaveCategory):
+        raise TypeError("category must be a LeaveCategory")
+
+    if category is LeaveCategory.VL:
+        if not isinstance(is_faculty, bool):
+            raise TypeError("is_faculty must be a bool for VL")
+        if not is_faculty:
+            raise IneligibleCategoryError(category.value)
+
+    elif category is LeaveCategory.COL:
+        if not isinstance(col_eligible, bool):
+            raise TypeError("col_eligible must be a bool for COL")
+        if not col_eligible:
+            raise IneligibleCategoryError(category.value)
+
+    return None

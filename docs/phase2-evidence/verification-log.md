@@ -97,3 +97,14 @@ Limitations:
 This validates a supplied balance and requested quantity. It does not
 calculate annual entitlement, determine employee eligibility, or deduct
 leave from a database balance.
+
+## Annual leave limits — 2026-10-17
+
+- Added annual-limit policy handling for CL, RH, SCL, EL, VL, and COL.
+- EL is limited to 30 days for non-faculty employees; the faculty EL limit remains unspecified.
+- VL is limited to eligible faculty, with a limit of 60 days.
+- COL requires explicit eligibility; the configured limit is 20 days.
+- SCL's 15-day value represents a maximum, not an automatic grant.
+- Verification: 26 unit tests passed across the entity, balance-policy, and entitlement-policy test modules.
+- Focused Flake8 check for selected syntax and undefined-name errors returned exit code 0.
+- Scope limitation: these results verify the tested domain helpers, not the complete ELM application or its approval workflows.

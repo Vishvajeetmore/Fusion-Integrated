@@ -64,3 +64,49 @@ def validate_sufficient_balance(
         raise InsufficientBalanceError(available, requested)
 
     return None
+
+
+
+def get_annual_limit(
+    category: LeaveCategory,
+    *,
+    is_faculty: bool | None = None,
+    col_eligible: bool | None = None,
+) -> Decimal:
+    """Return the documented annual limit for a leave category.
+
+    SCL's value is a maximum, not an automatic grant.
+    COL requires explicit eligibility.
+    """
+    if not isinstance(category, LeaveCategory):
+        raise TypeError("category must be a LeaveCategory")
+
+    fixed_limits = {
+        LeaveCategory.CL: Decimal("8"),
+        LeaveCategory.RH: Decimal("2"),
+        LeaveCategory.SCL: Decimal("15"),
+    }
+    if category in fixed_limits:
+        return fixed_limits[category]
+
+    if category in (LeaveCategory.EL, LeaveCategory.VL):
+        if not isinstance(is_faculty, bool):
+            raise TypeError("is_faculty must be a bool for EL/VL")
+
+        if category is LeaveCategory.EL:
+            if is_faculty:
+                raise ValueError("Faculty EL limit is unspecified")
+            return Decimal("30")
+
+        if not is_faculty:
+            raise ValueError("VL is applicable to faculty only")
+        return Decimal("60")
+
+    if category is LeaveCategory.COL:
+        if not isinstance(col_eligible, bool):
+            raise TypeError("col_eligible must be a bool for COL")
+        if not col_eligible:
+            raise ValueError("Employee is not eligible for COL")
+        return Decimal("20")
+
+    raise ValueError(f"No annual limit defined for {category!r}")

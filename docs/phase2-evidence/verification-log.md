@@ -69,3 +69,31 @@ Limitations:
 This function calculates continuous calendar days only. It does not yet
 implement leave balances, entitlement enforcement, employee eligibility,
 RH calendar validation, overlap detection, or approval workflows.
+
+## Milestone: Sufficient-Balance Validation
+
+Implemented in `modules/elm/domain/policy.py`.
+
+Function:
+`validate_sufficient_balance(available_balance, requested_days)`
+
+Verified behavior:
+- Accepts non-negative integer and Decimal quantities.
+- Supports fractional leave values such as 0.5.
+- Rejects negative values and invalid argument types.
+- Rejects non-finite Decimal values.
+- Raises InsufficientBalanceError when the requested amount exceeds
+  the available balance.
+
+Verification command:
+`python -m unittest modules.elm.tests.test_entities modules.elm.tests.test_policy -v`
+
+Recorded result:
+19 tests passed.
+
+Focused Flake8 checks completed with exit code 0.
+
+Limitations:
+This validates a supplied balance and requested quantity. It does not
+calculate annual entitlement, determine employee eligibility, or deduct
+leave from a database balance.

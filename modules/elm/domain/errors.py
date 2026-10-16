@@ -1,4 +1,5 @@
 from datetime import date
+from decimal import Decimal
 
 class ELMDomainError(Exception):
     """Base class for all ELM domain errors."""
@@ -19,7 +20,7 @@ class IneligibleCategoryError(ELMDomainError):
 
 class InsufficientBalanceError(ELMDomainError):
     """Error raised when the leave balance is insufficient."""
-    def __init__(self, balance: int, required: int):
+    def __init__(self, balance: int | Decimal, required: int | Decimal):
         self.balance = balance
         self.required = required
         super().__init__(f"Insufficient leave balance: {balance} available, {required} required.")

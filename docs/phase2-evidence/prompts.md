@@ -50,3 +50,22 @@ Aider generated some incorrect or duplicated content during initial attempts.
 The test file was subsequently cleaned up manually. OpenCode was also tried,
 but its session produced unrelated task content; it was not used as evidence
 of a successful ELM implementation.
+
+## Milestone: Continuous Leave-Day Counting
+
+Implemented in `modules/elm/domain/policy.py`.
+
+Function:
+`count_continuous_leave_days(category, date_range)`
+
+Behavior:
+- Supports EL, COL, and VL only.
+- Counts start and end dates inclusively.
+- Includes weekends and closed holidays.
+- Rejects CL, RH, and SCL for this continuous-counting operation.
+- Rejects invalid argument types.
+
+The implementation was written into the repository using PowerShell
+after reviewing and correcting the proposed implementation. Aider's earlier
+attempt contained incorrect weekday-only counting and duplicated domain
+classes, so that proposal was not used as the final implementation.

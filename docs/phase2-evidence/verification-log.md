@@ -42,3 +42,30 @@ permissions, or frontend integration.
 
 Update this file with new commands and their actual outcomes after every
 subsequent implementation milestone.
+
+## Continuous leave-day counting milestone
+
+Command:
+`python -m unittest modules.elm.tests.test_entities -v`
+
+Actual result:
+12 tests passed in 0.003 seconds.
+
+Additional verification:
+- Focused Flake8 command completed with exit code 0.
+- `git diff --check` reported no whitespace errors.
+- Git emitted a Windows LF/CRLF line-ending warning for the test file.
+  This is a warning, not a test failure.
+
+Additional test coverage:
+- EL, COL, and VL count inclusive calendar days.
+- A one-day interval counts as one day.
+- Friday through Monday counts as four calendar days.
+- CL, RH, and SCL are rejected by this function.
+- Incorrect argument types are rejected.
+- `datetime` boundaries are rejected by the date-only policy.
+
+Limitations:
+This function calculates continuous calendar days only. It does not yet
+implement leave balances, entitlement enforcement, employee eligibility,
+RH calendar validation, overlap detection, or approval workflows.

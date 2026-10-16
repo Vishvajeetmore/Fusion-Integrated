@@ -28,3 +28,9 @@ future implementation tasks until they are actually implemented and tested.
 
 This evidence must be updated as development continues. Do not describe
 unimplemented functionality as complete.
+
+## Latest verified milestone
+- Continuous leave-day counting implemented in `modules/elm/domain/policy.py`.
+- The focused domain suite currently contains 12 passing tests.
+- Focused Flake8 checks completed successfully.
+- Broader ELM business rules and integration are still pending.
